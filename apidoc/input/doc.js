@@ -213,7 +213,7 @@
  *   
 */
 
- /** @api {get} /api/scores get the whole score-list
+ /** @api {get} /api/scores Get whole score-list
  * @apiName GetScores
  * @apiGroup Score
  * 
