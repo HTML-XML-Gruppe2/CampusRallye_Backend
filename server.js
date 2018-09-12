@@ -66,6 +66,47 @@ app.delete('/api/object/:id', function (req, res) {
   });
 });
 
+app.get('/api/scores', function (req, res){
+
+  dbHandler.getAllScores(function (err, result) {
+    if (err) {
+      res.status(404);
+      res.send({ "error": err.message })
+    }
+    else {
+      res.send(result);
+    }
+  });
+
+});
+
+app.post('/api/scores', function (req, res) {
+
+  var score = req.body;
+
+  dbHandler.addScore(score, function (err, result) {
+    if (err) {
+      res.status(400);
+      res.send({ "error": err.message });
+    } else {
+      res.status(200);
+      res.send(result);
+    }
+  });
+});
+
+app.delete('/api/score/:id', function (req, res) {
+
+  dbHandler.deleteScore(req.params.id, function (err, result) {
+    if (err) {
+      res.status(404);
+      res.send({ "error": err.message });
+    } else {
+      res.send();
+    }
+  });
+});
+
 
 //########################################################
 

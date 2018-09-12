@@ -15,7 +15,7 @@ mongo.connect(url, function (err, db) {
                     name:{
                         bsonType: "string"
                     },
-                    name: {
+                    score: {
                         bsonType: "int"
                     }
                 }

@@ -74,7 +74,6 @@ module.exports = {
             callback(err, null);
             return;
         }
-
         database.collection("objects").deleteOne(query, function (err, res) {
             if (err) {
                 callback(err, null);
@@ -86,11 +85,68 @@ module.exports = {
                 }
             }
         });
+    },
+
+    getAllScores: function(callback){
+        var fields = { name: 1, score: 1 };
+
+        database.collection("scores").find({}, { projection: fields }).toArray(function (err, result) {
+            if (err) throw err;
+
+            if (result.length == 0) {
+                callback(new Error("No scores found"), null);
+            }
+            else {
+                callback(null, result);
+            }
+        });
+    },
+
+    addScore: function (score, callback) {
+        try {
+            validateInputScore(score);
+
+
+            database.collection("scores").insertOne(score, function (err, res) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, { "scoreId": res.insertedId });
+                }
+            })
+        }
+        catch (err) {
+            callback(err, null)
+        }
+    },
+
+    deleteScore: function (scoreId, callback) {
+        try {
+            var query = { _id: new ObjectId(scoreId) };
+        } catch (err) {
+            callback(err, null);
+            return;
+        }
+        database.collection("scores").deleteOne(query, function (err, res) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (res.result.n == 0) {
+                    callback(new Error("score not found"), null);
+                } else {
+                    callback(null, res);
+                }
+            }
+        });
     }
 
 };
 
+function validateInputScore(score){
 
+    if(!score.hasOwnProperty("name")) throw new Error("score-item has no name");
+    if(!score.hasOwnProperty("score")) throw new Error("score has no score");
+}
 
 function validateInputObject(object) {
 
