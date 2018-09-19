@@ -54,7 +54,9 @@ module.exports = {
         try {
             validateInputObject(object);
 
-            database.collection("objects").insertOne(object, function (err, res) {
+            var completeObject = addQuestionIndices(object);
+
+            database.collection("objects").insertOne(completeObject, function (err, res) {
                 if (err) {
                     callback(err, null);
                 } else {
@@ -141,6 +143,21 @@ module.exports = {
     }
 
 };
+
+function addQuestionIndices(object)
+{
+    for(var i = 0; i < object.questions.length; i++)
+    {
+        object.questions[i].id = i;
+
+        for(var j = 0; j < object.questions[i].answers.length; j++)
+        {
+            object.questions[i].answers[j].id = j;
+        }
+    }
+
+    return object;
+}
 
 function validateInputScore(score){
 
