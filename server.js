@@ -4,7 +4,7 @@ var https = require('https')
 var dbHandler = require("./database-handler");
 var app = express();
 
-var frontendPath = "C:\\Users\\jansenjon\\Desktop\\CampusRallye_Frontend";
+var frontendPath = "C:\\Users\\jansenjon\\Desktop\\5. Semester\\6. HTML,XML und Usability\\CampusRallye\\CampusRallye_Frontend";
 
 app.use(express.json());
 dbHandler.init();

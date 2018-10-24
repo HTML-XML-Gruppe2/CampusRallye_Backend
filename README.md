@@ -2,7 +2,7 @@
 
 The Backend of the Project "CampusRallye" is built using Node.js. It uses express.js to provide a HTTPS-Server for the static frontend and a REST-API for asyc communication. The requested information is delivered by `database-handler.js` which connnects to a mongoDB database.
 
-In order to run the backend, first install [node.js](https://nodejs.org/en/), then  install [mongoDB](https://www.mongodb.com/download-center#community) and get it running as a service with the (default) port 27017 or change the port in `database-handler.js`.
+In order to run the backend, first install [node.js](https://nodejs.org/en/), then  install [mongoDB](https://www.mongodb.com/download-center#community) community server and get it running as a service with the (default) port 27017 or change the port in `database-handler.js`.
 
 Then install the dependencies of the project using 
 ```
