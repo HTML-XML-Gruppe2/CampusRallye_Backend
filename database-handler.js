@@ -5,6 +5,7 @@ var database;
 
 module.exports = {
 
+    //connect to database, must be called first
     init: function () {
         mongo.connect(url, function (err, db) {
             if (err) throw err;
@@ -15,6 +16,8 @@ module.exports = {
     },
 
     getObjectInfo: function (objectId, callback) {
+
+        //create new Query, fails if the given objectid is not a valid mongoDB id
         try {
             var query = { _id: new ObjectId(objectId) };
         } catch (err) {
@@ -22,6 +25,8 @@ module.exports = {
             return;
         }
         database.collection("objects").find(query).toArray(function (err, result) {
+
+            //check the query result
             if (err) throw err;
             if (result.length > 1) throw new Error("Multiple objects with same id");
 
@@ -36,6 +41,7 @@ module.exports = {
 
     getAllObjectBasics: function (callback) {
 
+        //basic info only contains object name, description and position
         var fields = { _id: 1, name: 1, description: 1, position: 1 };
 
         database.collection("objects").find({}, { projection: fields }).toArray(function (err, result) {
@@ -144,6 +150,7 @@ module.exports = {
 
 };
 
+//when new objects are created, the questions and answers are given indices
 function addQuestionIndices(object)
 {
     for(var i = 0; i < object.questions.length; i++)
@@ -165,6 +172,7 @@ function validateInputScore(score){
     if(!score.hasOwnProperty("score")) throw new Error("score has no score");
 }
 
+//check if the object has the needed properties for a valid object
 function validateInputObject(object) {
 
     if (!object.hasOwnProperty("name")) throw new Error("object has no name");

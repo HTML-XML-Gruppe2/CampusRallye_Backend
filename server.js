@@ -11,6 +11,7 @@ dbHandler.init();
 
 
 //################ REST API ###############################
+//REST API Documentation is performed in /apidoc
 
 app.get('/api/object/:id', function (req, res) {
 
